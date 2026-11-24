@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>運動與減重：論文怎麼說</title>
+<style>
+/* layout: 16:9 stage scaled to the window; one idea per slide, big type, icon + short lines */
+:root{
+  --bg:#f5eddc; --card:#fbf6ea; --ink:#3a2f23; --muted:#7a6a55; --line:#e0d2b8;
+  --accent:#8b5e34; --accent2:#7d9a6b; --sand:#c9a063; --soft:#efe3c9; --warn:#9a4d1f; --warnsoft:#f3dcc0;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#2b241b;font-family:var(--font);color:var(--ink);overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;background:var(--bg);overflow:hidden}
+.slide{position:absolute;inset:0;padding:56px 72px 64px;display:none;flex-direction:column}
+.slide.on{display:flex}
+h1,h2{font-family:var(--serif);margin:0;line-height:1.25}
+h2{font-size:44px;margin-bottom:28px;display:flex;align-items:center;gap:16px}
+h2 .ic{width:46px;height:46px;padding:9px;border-radius:12px;background:var(--soft);color:var(--accent)}
+.ic{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.foot{position:absolute;left:72px;right:72px;bottom:20px;display:flex;justify-content:space-between;font-size:15px;color:var(--muted)}
+.src{max-width:900px}
+.cover{background:#8b6b4a;color:#fbf6ea;justify-content:center}
+.cover h1{font-size:72px;margin-bottom:18px}
+.cover p{font-size:28px;margin:0;opacity:.9}
+.cover .tag{display:inline-flex;gap:10px;margin-top:40px;font-size:20px}
+.cover .tag span{border:1px solid rgba(251,246,234,.6);border-radius:999px;padding:6px 18px}
+.cover .big{position:absolute;right:90px;top:150px;width:340px;height:340px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;flex:1;align-items:stretch}
+.box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px}
+.box .ic{width:52px;height:52px;padding:11px;border-radius:14px;background:var(--soft);color:var(--accent)}
+.box .n{font-family:var(--serif);font-size:56px;color:var(--accent);line-height:1}
+.box .n small{font-size:24px;color:var(--muted);font-family:var(--font)}
+.box h3{margin:0;font-size:26px}
+.box p{margin:0;font-size:22px;line-height:1.5;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:24px;background:var(--card);border-radius:14px;overflow:hidden}
+th,td{padding:12px 20px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--soft);font-size:21px;color:var(--accent)}
+td.k{font-weight:700}
+.note{margin-top:18px;font-size:22px;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+.note .ic{width:26px;height:26px;color:var(--accent);margin-top:2px}
+.warnbox{margin-top:18px;background:var(--warnsoft);border-left:6px solid var(--warn);border-radius:0 12px 12px 0;padding:14px 20px;font-size:21px;display:flex;gap:12px;align-items:center}
+.warnbox .ic{width:28px;height:28px;color:var(--warn)}
+.chart{flex:1;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 28px 10px;display:flex;gap:28px;align-items:stretch}
+.chart svg{flex:1;min-width:0}
+.side{width:300px;display:flex;flex-direction:column;gap:14px;justify-content:center;font-size:22px;color:var(--muted)}
+.side b{color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;background:var(--soft);color:var(--accent);font-size:20px;font-weight:700}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1}
+ul.big{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+ul.big li{display:flex;gap:14px;font-size:25px;line-height:1.45;align-items:flex-start}
+ul.big li .ic{width:30px;height:30px;color:var(--accent);margin-top:5px}
+.nav{position:fixed;bottom:12px;right:16px;display:flex;gap:8px;z-index:5}
+.nav button{background:#fbf6ea;color:#3a2f23;border:1px solid #c9b48c;border-radius:8px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.nav button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#bar{position:fixed;left:0;top:0;height:4px;background:var(--sand);z-index:6;transition:width .2s}
+#cnt{position:fixed;bottom:16px;left:16px;color:#3a2f23;background:#fbf6ea;padding:2px 10px;border-radius:8px;font-size:14px;z-index:5}
+.legend{display:flex;gap:18px;font-size:18px;color:var(--muted);margin-bottom:4px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+.fig{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 20px;margin-top:16px}
+.fig svg{display:block;width:100%;height:auto}
+.fig .cap{font-size:17px;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="stage">
+
+<section class="slide cover on">
+  <h1>運動與減重：論文怎麼說</h1>
+  <p>運動能幫多少？做多久？要做哪一種？</p>
+  <div class="tag"><span>5 篇論文</span><span>統合分析為主</span><span>附頁碼出處</span></div>
+  <svg class="big" viewBox="0 0 260 200" aria-hidden="true" style="width:300px;height:230px;right:70px;top:230px">
+    <g fill="none" stroke-linecap="round">
+      <path d="M50 100h160" stroke="#fbf6ea" stroke-width="12"/>
+      <path d="M74 56v88M186 56v88" stroke="#c9a063" stroke-width="22"/>
+      <path d="M50 74v52M210 74v52" stroke="#7d9a6b" stroke-width="18"/>
+      <path d="M26 88v24M234 88v24" stroke="#fbf6ea" stroke-width="12"/>
+    </g>
+  </svg>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>先看結論</h2>
+  <div class="three">
+    <div class="box"><svg class="ic" viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M9 9c1-1 5-1 6 0M12 9l1 3"/></svg><div class="n" style="font-size:44px">0.05–1.01<small> 公斤</small></div><h3>單靠運動，體重變化小</h3><p>O'Donoghue 的估計；有氧的分析較大（Wang 2.35、Jayedi 2.79 公斤），三篇並列。</p></div>
+    <div class="box"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><div class="n">150<small> 分鐘／週</small></div><h3>每週 300 分鐘內，越久掉越多</h3><p>每週 150 分鐘是腰圍、體脂有臨床意義下降的大致門檻（Jayedi）。</p></div>
+    <div class="box"><svg class="ic" viewBox="0 0 24 24"><path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/></svg><div class="n" style="font-size:44px">看體組成</div><h3>節食加阻力訓練</h3><p>總體重沒多掉，但多減脂肪、保住較多瘦體重（Binmahfoz）。</p></div>
+  </div>
+  <div class="foot"><span class="src">O'Donoghue 2021, p.15；Wang 2024, p.1；Jayedi 2024, p.1, p.6, p.7, p.8；Binmahfoz 2025, p.1, p.6</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M9 9c1-1 5-1 6 0M12 9l1 3"/></svg>單靠運動，體重減得不多</h2>
+  <div class="chart" style="gap:56px">
+    <svg viewBox="0 0 720 320" style="flex:none;width:600px;align-self:center" role="img" aria-label="三篇研究的體重下降公斤數並列">
+      <line x1="170" y1="25" x2="170" y2="280" stroke="#e0d2b8"/><text x="170" y="300" font-size="16" fill="#7a6a55" text-anchor="middle">0</text><line x1="280" y1="25" x2="280" y2="280" stroke="#e0d2b8"/><text x="280" y="300" font-size="16" fill="#7a6a55" text-anchor="middle">1</text><line x1="390" y1="25" x2="390" y2="280" stroke="#e0d2b8"/><text x="390" y="300" font-size="16" fill="#7a6a55" text-anchor="middle">2</text><line x1="500" y1="25" x2="500" y2="280" stroke="#e0d2b8"/><text x="500" y="300" font-size="16" fill="#7a6a55" text-anchor="middle">3</text><line x1="610" y1="25" x2="610" y2="280" stroke="#e0d2b8"/><text x="610" y="300" font-size="16" fill="#7a6a55" text-anchor="middle">4</text><rect x="175.5" y="40" width="105.6" height="38" fill="#c9a063" rx="4"/><text x="160" y="66" font-size="19" text-anchor="end" fill="#3a2f23">O'Donoghue</text><text x="289.1" y="67" font-size="21" font-weight="700" fill="#3a2f23">−0.05 至 −1.01</text><rect x="170.0" y="100" width="258.5" height="38" fill="#8b5e34" rx="4"/><text x="160" y="126" font-size="19" text-anchor="end" fill="#3a2f23">Wang（有氧）</text><text x="436.5" y="127" font-size="21" font-weight="700" fill="#3a2f23">−2.35</text><rect x="170.0" y="160" width="306.9" height="38" fill="#7d9a6b" rx="4"/><text x="160" y="186" font-size="19" text-anchor="end" fill="#3a2f23">Jayedi 150 分</text><text x="484.9" y="187" font-size="21" font-weight="700" fill="#3a2f23">−2.79</text><rect x="170.0" y="220" width="460.9" height="38" fill="#7d9a6b" rx="4"/><text x="160" y="246" font-size="19" text-anchor="end" fill="#3a2f23">Jayedi 300 分</text><text x="638.9" y="247" font-size="21" font-weight="700" fill="#3a2f23">−4.19</text>
+      <text x="700" y="300" font-size="16" fill="#7a6a55" text-anchor="end">公斤</text>
+    </svg>
+    <div class="side">
+      <div><b>三篇並列保留</b>。納入的族群不同：O'Donoghue 是 BMI ≥30，Wang 是 BMI ≥25，Jayedi 是過重或肥胖成人；差異原因原文未直接討論。</div>
+      <div>運動較明顯的好處在腰圍、體脂與體能（見後頁）。O'Donoghue：任何運動都優於不運動；明顯減重需搭配熱量赤字、與飲食合併（原文引用其他文獻）。</div>
+    </div>
+  </div>
+  <div class="foot"><span class="src">O'Donoghue 2021, p.15；Wang 2024, p.1；Jayedi 2024, p.6, p.9</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>每週 300 分鐘內，越久掉越多</h2>
+  <div class="chart">
+    <svg viewBox="0 0 640 340" role="img" aria-label="每週有氧分鐘數與體重下降公斤數示意：150 分鐘約 2.79、300 分鐘約 4.19">
+      <g stroke="#e0d2b8"><line x1="80" y1="300" x2="600" y2="300"/><line x1="80" y1="210" x2="600" y2="210"/><line x1="80" y1="120" x2="600" y2="120"/><line x1="80" y1="30" x2="600" y2="30"/></g>
+      <polyline points="80,300 340,160.5 600,90.5" fill="none" stroke="#7d9a6b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="#7d9a6b"><circle cx="80" cy="300" r="7"/><circle cx="340" cy="160.5" r="7"/><circle cx="600" cy="90.5" r="7"/></g>
+      <g font-size="22" font-weight="700" fill="#3a2f23" text-anchor="middle"><text x="340" y="140">−2.79 公斤</text><text x="555" y="70">−4.19 公斤</text></g>
+      <g font-size="18" fill="#7a6a55" text-anchor="middle"><text x="80" y="326">0</text><text x="340" y="326">150 分鐘／週</text><text x="600" y="326" text-anchor="end">300 分鐘／週</text></g>
+    </svg>
+    <div class="side">
+      <div class="pill">每多 30 分鐘／週</div>
+      <div>體重 <b>−0.52 公斤</b>（中等確定性）</div>
+      <div>腰圍 <b>−0.56 公分</b>（高）</div>
+      <div>體脂率 <b>−0.37 個百分點</b>（中等）</div>
+      <div style="font-size:17px">示意：作者描述體重呈直線下降；0 為示意起點。116 個隨機對照試驗、6,880 人。</div>
+    </div>
+  </div>
+  <div class="note"><svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>只納入有人督導、至少 8 週的有氧試驗。副作用多為輕到中度肌肉骨骼不適，每 100 人多約 2 件（確定性低）。</span></div>
+  <div class="foot"><span class="src">Jayedi 2024, p.1, p.3, p.4, p.5, p.6</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>多久才算「有意義」</h2>
+  <table>
+    <tr><th>指標（有意義門檻）</th><th>結果</th></tr>
+    <tr><td class="k">腰圍（2 公分）</td><td>每週 300 分鐘：中等強度 −4.21 公分；中等到高強度 −5.34 公分</td></tr>
+    <tr><td class="k">體脂率（2%）</td><td>每週 150 分鐘降幅最大，約 −2.08 個百分點</td></tr>
+    <tr><td class="k">脂肪量（2 公斤）</td><td>每週約 100 分鐘就超過門檻</td></tr>
+  </table>
+  <div class="fig"><svg viewBox="0 0 1080 150" role="img" aria-label="每週有氧分鐘數與各指標超過臨床意義門檻的位置示意">
+    <line x1="60" y1="70" x2="1020" y2="70" stroke="#c9b48c" stroke-width="6" stroke-linecap="round"/>
+    <g fill="#8b5e34"><circle cx="60" cy="70" r="9"/><circle cx="380" cy="70" r="11" fill="#7d9a6b"/><circle cx="540" cy="70" r="11" fill="#7d9a6b"/><circle cx="1020" cy="70" r="9"/></g>
+    <g font-size="20" fill="#3a2f23" text-anchor="middle"><text x="60" y="112">0</text><text x="380" y="112">約 100 分鐘</text><text x="540" y="112">150 分鐘</text><text x="1020" y="112">300 分鐘</text></g>
+    <g font-size="18" fill="#7a6a55" text-anchor="middle"><text x="380" y="40">脂肪量 &gt;2 公斤</text><text x="540" y="40" >體脂率降幅最大</text><text x="1020" y="40">腰圍 −4.21 至 −5.34 公分</text></g>
+  </svg><div class="cap">示意圖：位置為文字所述分鐘數的概略標示，不依比例；腰圍超過門檻的分鐘數原文未說。</div></div>
+  <div class="warnbox"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>強度：作者結論寫「看不到可信的強度差異」；討論另提高強度超過門檻的幅度較大。兩處並列，證據不算強。</span></div>
+  <div class="foot"><span class="src">Jayedi 2024, p.6, p.7, p.10, p.11</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>哪種運動最好？研究 A：Wang</h2>
+  <table>
+    <tr><th>指標</th><th>表現最好</th><th>效果</th></tr>
+    <tr><td class="k">體重</td><td>有氧</td><td>−2.35 公斤</td></tr>
+    <tr><td class="k">BMI</td><td>有氧</td><td>−0.9</td></tr>
+    <tr><td class="k">腰圍</td><td>HIIT</td><td>−5.93</td></tr>
+    <tr><td class="k">體脂率</td><td>HIIT</td><td>−3.93</td></tr>
+    <tr><td class="k">三酸甘油酯／空腹血糖</td><td>HIIT</td><td>−20.55／−14.31</td></tr>
+    <tr><td class="k">最大攝氧量 VO2max</td><td>HIIT</td><td>+7.41</td></tr>
+  </table>
+  <div class="note"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg><span>成人 BMI ≥25；28 個隨機對照試驗、1,620 人。HIIT＝高強度間歇訓練；作者提醒它可能不適合沒有運動基礎的人。總膽固醇與血壓沒有顯著改善。</span></div>
+  <div class="foot"><span class="src">Wang 2024, p.1, p.10</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>哪種運動最好？研究 B：O'Donoghue</h2>
+  <table style="font-size:21px">
+    <tr><th>類型</th><th>BMI</th><th>腰圍</th><th>體脂率</th></tr>
+    <tr><td class="k">高強度有氧＋高負荷阻力</td><td>−2.79（最佳）</td><td>沒有研究回報</td><td>−2.82（最佳）</td></tr>
+    <tr><td class="k">低中強度有氧＋低中負荷阻力</td><td>−1.56</td><td>−2.76（最佳）</td><td>−2.15</td></tr>
+    <tr><td class="k">中強度有氧</td><td>−1.76</td><td>−2.31</td><td>−1.70</td></tr>
+    <tr><td class="k">高強度有氧</td><td>−0.94</td><td>−2.03</td><td>未達顯著</td></tr>
+    <tr><td class="k">阻力訓練</td><td>未達顯著</td><td>效果較差</td><td>未達顯著</td></tr>
+  </table>
+  <div class="warnbox"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>與研究 A <b>並列保留</b>：Wang 的最佳是有氧／HIIT，O'Donoghue 的最佳是混合訓練；分類方式與族群（BMI ≥25 vs ≥30）不同，不互相取代。</span></div>
+  <div class="note"><svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>45 個隨機對照試驗、3,566 人；其中 20 個高偏誤風險、13 個中度。各類型的絕對差距不大；低中負荷阻力訓練被評為最無效；阻力與混合訓練的直接比較很少，需保守解讀。</span></div>
+  <div class="foot"><span class="src">O'Donoghue 2021, p.1, p.12, p.13, p.14, p.15, p.16</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>心肺適能：重要但別只看顯著</h2>
+  <div class="row2">
+    <div class="box"><h3>Wang 2024</h3><div class="n">+7.41<small> VO2max（HIIT）</small></div><p>所有運動類型都顯著改善心肺適能，HIIT 提升最多，其次是有氧。（+7.41 的單位 wiki 未列，不可與右側百分比直接比較。）</p></div>
+    <div class="box"><h3>O'Donoghue 2021</h3><div class="n">7–15<small> % 提升</small></div><p>各種運動都約提升 7–15%，但沒有一項達到統計顯著；混合訓練最多（約 15%）。</p></div>
+  </div>
+  <div class="note"><svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>為何重要：O'Donoghue 指出，中到高程度的心肺適能可減輕肥胖的不良影響，與 BMI 高低無關。（原文另轉引「提升約 8–10% 與死亡風險約下降 12%」，本 wiki 尚未核對該文獻。）</span></div>
+  <div class="foot"><span class="src">Wang 2024, p.1, p.11；O'Donoghue 2021, p.2, p.16</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/></svg>節食時加阻力訓練</h2>
+  <table style="font-size:23px">
+    <tr><th>指標（相對只節食）</th><th>結果</th><th>證據確定性</th></tr>
+    <tr><td class="k">體重</td><td>差 −0.32 公斤，不顯著</td><td>中等</td></tr>
+    <tr><td class="k">脂肪量</td><td>多減（SMD −0.36）</td><td>高</td></tr>
+    <tr><td class="k">瘦體重</td><td>少掉得較少（SMD 0.40）</td><td>中等</td></tr>
+    <tr><td class="k">肌力</td><td>更強（SMD 2.36）</td><td>低</td></tr>
+    <tr><td class="k">血糖、血脂、血壓等</td><td>皆無顯著差異</td><td>低至高不等</td></tr>
+  </table>
+  <div class="note"><svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>瘦體重＝除了脂肪以外的重量（肌肉為主）。SMD 是標準化平均差，約 0.2 小、0.5 中、0.8 大。25 個隨機對照試驗，成人 BMI ≥25。</span></div>
+  <div class="foot"><span class="src">Binmahfoz 2025, p.1, p.6</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M3 7l6 6 4-4 8 8"/><path d="M15 17h6v-6"/></svg>瘦體重的保護只在短期明顯</h2>
+  <div class="chart">
+    <svg viewBox="0 0 460 340" style="flex:none;width:440px;height:auto;align-self:center" role="img" aria-label="瘦體重 SMD：5 個月內 0.52 顯著，6 個月以上 0.20 不顯著">
+      <g stroke="#e0d2b8"><line x1="50" y1="300" x2="440" y2="300"/><line x1="50" y1="150" x2="440" y2="150"/></g>
+      <rect x="100" y="102.4" width="120" height="197.6" fill="#7d9a6b" rx="4"/>
+      <rect x="260" y="224" width="120" height="76" fill="#d6c7a6" rx="4" stroke="#b9a57e" stroke-dasharray="6 4"/>
+      <g font-size="26" font-weight="700" fill="#3a2f23" text-anchor="middle"><text x="160" y="92">0.52</text><text x="320" y="214">0.20</text></g>
+      <g font-size="19" fill="#3a2f23" text-anchor="middle"><text x="160" y="328">≤5 個月</text><text x="320" y="328">≥6 個月（不顯著）</text></g>
+    </svg>
+    <div class="side" style="width:auto;flex:1;font-size:25px;gap:20px;padding-left:24px">
+      <div>瘦體重 SMD：短期顯著，6 個月以上不顯著。</div>
+      <div>作者推測與中途退出、遵從度與督導減少有關，但原文說資料不足以驗證。</div>
+      <div>脂肪量多減的效果，短期與長期都有。</div>
+      <div>肌力：確定性低、研究間差異大（I² = 86%），預測區間跨過零，需小心解讀。</div>
+    </div>
+  </div>
+  <div class="note"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>限制：多數試驗偏誤風險不明或偏高；超過半數（15 個）只招募女性。</span></div>
+  <div class="foot"><span class="src">Binmahfoz 2025, p.5, p.6, p.10, p.12</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="1.8"/><path d="M12 8l-3 4 3 2v6M12 8l3 3 3 1M9 12l-3 3"/></svg>日常活動 NEAT：別忘了走路</h2>
+  <div class="warnbox" style="margin:0 0 16px"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>證據等級較低：這是臨床實務聲明（專家共識），不是統合分析，數字多為引用或概略值。</span></div>
+  <div class="row2" style="flex:none;height:150px">
+    <div class="box" style="padding:18px 24px"><h3>NEAT＝非運動性活動產熱</h3><p style="font-size:20px">站立、走路、爬樓梯、做家事等日常消耗；不同人的 NEAT 約差 150–500 大卡／天。</p></div>
+    <div class="box" style="padding:18px 24px"><h3>粗估</h3><p style="font-size:20px">每 20 步約 1 大卡；美國成人平均不到 5,000 步。減重時身體會適應，要維持減重速度需更多消耗或更少攝取。</p></div>
+  </div>
+  <div class="fig"><svg viewBox="0 0 780 140" style="max-width:780px;margin:0 auto" role="img" aria-label="每日步數分級示意"><rect x="10" y="40" width="190" height="56" fill="#d9c6a0"/><text x="105" y="74" font-size="22" font-weight="700" fill="#3a2f23" text-anchor="middle">久坐</text><text x="105" y="128" font-size="19" fill="#3a2f23" text-anchor="middle">&lt;5,000</text><rect x="200" y="40" width="190" height="56" fill="#c9a063"/><text x="295" y="74" font-size="22" font-weight="700" fill="#3a2f23" text-anchor="middle">低活動</text><text x="295" y="128" font-size="19" fill="#3a2f23" text-anchor="middle">5,000–7,500</text><rect x="390" y="40" width="190" height="56" fill="#a9a86b"/><text x="485" y="74" font-size="22" font-weight="700" fill="#3a2f23" text-anchor="middle">中等</text><text x="485" y="128" font-size="19" fill="#3a2f23" text-anchor="middle">7,500–10,000</text><rect x="580" y="40" width="190" height="56" fill="#7d9a6b"/><text x="675" y="74" font-size="22" font-weight="700" fill="#3a2f23" text-anchor="middle">活躍</text><text x="675" y="128" font-size="19" fill="#3a2f23" text-anchor="middle">約 10,000 以上</text></svg><div class="cap">每日步數分級（示意，不依比例）。</div></div>
+  <div class="foot"><span class="src">Alexander 2022, p.1, p.11, p.13</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>論文怎麼建議</h2>
+  <table style="font-size:20px">
+    <tr><th style="width:190px">來源</th><th>建議（各篇原話的意思）</th><th style="width:130px">證據</th></tr>
+    <tr><td class="k">Jayedi 2024</td><td>每週 150 分鐘以上、中等強度或更高，可能才足以讓腰圍與體脂有臨床意義下降</td><td>統合分析</td></tr>
+    <tr><td class="k">Binmahfoz 2025</td><td>作者提到世界衛生組織建議每週兩次肌力訓練，結果支持減重期間照做；呼籲發展彈力帶、徒手等簡單方式</td><td>統合分析</td></tr>
+    <tr><td class="k">Alexander 2022</td><td>熱量負平衡時，阻力訓練每週至少兩次、練大肌群；每小時至少走 10 分鐘</td><td>專家共識</td></tr>
+    <tr><td class="k">Wang 2024</td><td>選擇運動要考慮體能與個人偏好；HIIT 可能不適合沒有運動基礎的人</td><td>統合分析</td></tr>
+    <tr><td class="k">O'Donoghue 2021</td><td>運動應與飲食合併才能發揮最大效果（原文引用其他文獻）</td><td>統合分析</td></tr>
+  </table>
+  <div class="foot"><span class="src">Jayedi 2024, p.11；Binmahfoz 2025, p.11, p.12；Alexander 2022, p.5, p.10, p.11；Wang 2024, p.10；O'Donoghue 2021, p.15</span></div>
+</section>
+
+<section class="slide">
+  <h2><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>出處與限制</h2>
+  <div class="row2">
+    <div class="box"><h3>5 篇來源</h3><p style="font-size:20px;line-height:1.6">Wang 2024：網絡統合分析<br>O'Donoghue 2021：網絡統合分析<br>Jayedi 2024：劑量反應統合分析<br>Binmahfoz 2025：統合分析<br>Alexander 2022：臨床實務聲明（專家共識）</p></div>
+    <div class="box"><h3>限制</h3><p style="font-size:20px;line-height:1.6">多數試驗無法設盲；O'Donoghue 45 個試驗中 20 個高偏誤風險；Jayedi 116 個中只有 14 個低風險<br>Wang 受試者 75% 為女性<br>Jayedi：54 個為嚴重偏誤風險、體重研究間差異大（I² = 88%）、超過 48 週的試驗只有 2 個<br>本 wiki 另列待補：阻力訓練單獨（不節食）的證據、運動頻率</p></div>
+  </div>
+  <div class="warnbox"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>本簡報為研究整理，非醫療建議；有疾病或服藥者請諮詢醫師。</span></div>
+  <div class="foot"><span class="src">Wang 2024, p.11；O'Donoghue 2021, p.16；Jayedi 2024, p.5, p.6, p.10, p.11；Binmahfoz 2025, p.12；Alexander 2022, p.1</span></div>
+</section>
+
+</div>
+<div id="cnt"></div>
+<div class="nav"><button id="prev" type="button" aria-label="上一頁">◀ 上一頁</button><button id="next" type="button" aria-label="下一頁">下一頁 ▶</button></div>
+<script>
+var S=[].slice.call(document.querySelectorAll('.slide')),i=0,st=document.getElementById('stage');
+function fit(){var s=Math.min(innerWidth/1280,innerHeight/720);st.style.transform='translate(-50%,-50%) scale('+s+')'}
+function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(e,k){e.classList.toggle('on',k===i)});
+  document.getElementById('cnt').textContent=(i+1)+' / '+S.length;
+  document.getElementById('bar').style.width=((i+1)/S.length*100)+'%';
+  try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+addEventListener('resize',fit);fit();
+addEventListener('keydown',function(e){
+  if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].indexOf(e.key)>=0){e.preventDefault();go(i+1)}
+  else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].indexOf(e.key)>=0){e.preventDefault();go(i-1)}
+  else if(e.key==='Home')go(0);else if(e.key==='End')go(S.length-1);
+});
+document.getElementById('prev').onclick=function(){go(i-1)};
+document.getElementById('next').onclick=function(){go(i+1)};
+var tx=null;addEventListener('touchstart',function(e){tx=e.touches[0].clientX});
+addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(i+(d<0?1:-1));tx=null});
+var m=/^#s(\d+)$/.exec(location.hash);go(m?+m[1]-1:0);
+</script>
+</body>
+</html>
